@@ -1,4 +1,4 @@
-public class CacheCard {
+public class CashCard {
     private int cardNumber;
     private String lastName;
     private int pinCode;
@@ -21,7 +21,7 @@ public class CacheCard {
         return balance;
     }
 
-    public CacheCard (int cardNumber, String lastName, int pinCode, int balance){
+    public CashCard (int cardNumber, String lastName, int pinCode, int balance){
         this.lastName = lastName;
         this.pinCode = pinCode;
         this.balance = balance;
