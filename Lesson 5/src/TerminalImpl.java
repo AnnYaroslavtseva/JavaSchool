@@ -1,4 +1,3 @@
-import sun.misc.Cache;
 
 import java.util.HashSet;
 import java.util.Scanner;
@@ -12,61 +11,96 @@ public class TerminalImpl implements Terminal {
     }
 
     @Override
-    public void putMoney(CashCard card, int sum) {
-        System.out.println("Вы положили "+sum+" денег."+ "Баланс = "+card.getBalance()+sum);
+    public int putMoney(CashCard card, int money) {
+        int balance = card.getBalance();
+        balance += money;
+        return balance;
 
     }
+
+  /*  @Override
+    public int takeMoney(CashCard card, int money) throws NotEnoughMoneyException {
+        if (card.getBalance() > money) {
+            int balance = card.getBalance();
+            balance -= money;
+            return balance;
+        } else { throw new NotEnoughMoneyException("На вашем счету недостаточно денег");
+        }
+
+
+        }*/
 
     @Override
-    public void takeMoney(CashCard card, int sum) throws NotEnoughMoneyException {
-        try {
-            if (card.getBalance() > sum){
-                System.out.println("Вы положили " + sum + " денег." + "Баланс = " + card.getBalance() + sum);}
-                else{
-                new NotEnoughMoneyException("На вашем счету недостаточно денег");
-            }
-        } catch (NotEnoughMoneyException e) {
-            e.getMessage();
-        };
+    public int takeMoney(CashCard card, int money) throws NotEnoughMoneyException {
+        if (card.getBalance() < money)  throw new NotEnoughMoneyException("На вашем счету недостаточно денег");
+            int balance = card.getBalance();
+            balance -= money;
+            return balance;
+
     }
 
-    public  static void main(String args[]){
+
+
+    public void run() throws NotEnoughMoneyException {
+        int cardNumber = 0;
+        String lastName = null;
+        int pinCode = 0;
+
         Scanner scan = new Scanner(System.in);
-        CashCard card1 = new CashCard(123456,"Ivanov", 1111, 9000);
-        CashCard card2 = new CashCard(123457,"Petrov", 1234, 100);
-        CashCard card3 = new CashCard(123458,"Sidorov", 6969, 1000000);
-        Set<CashCard> cashCards = new HashSet<CashCard>();
+        CashCard card1 = new CashCard(123456, "Ivanov", 1111, 9000);
+        CashCard card2 = new CashCard(123457, "Petrov", 1234, 100);
+        CashCard card3 = new CashCard(123458, "Sidorov", 6969, 1000000);
+        Set<CashCard> cashCards = new HashSet();
         cashCards.add(card1);
         cashCards.add(card2);
         cashCards.add(card3);
 
-        System.out.println("Вставьте карту(Введите номер и фамилию:)");
-        int cardNumber = scan.nextInt();
-        String lastName = scan.nextLine();
+        System.out.println("Вставьте карту(Введите номер и фамилию латиницей):");
+        cardNumber = scan.nextInt();
+        scan.nextLine();
+        lastName = scan.nextLine();
+        System.out.println("Введите пинкод:");
+        pinCode = scan.nextInt();
+        CashCard card = new CashCard(cardNumber, lastName, pinCode, 0);
+        if (!cashCards.contains(card)) {
+            System.out.println("Карта не читается, вставьте другую карту");
+        } else {
+            for (CashCard cashCard : cashCards) { //foreach
+                if (cashCard.equals(card)) {
+                    System.out.println("/.................Введите код операции, которую хотите выполнить............../");
+                    System.out.println("/..................1: проверить баланс карты................................../");
+                    System.out.println("/..................2: пополнить баланс карты................................../");
+                    System.out.println("/..................3: снять деньги с карты..................................../");
+                    int i = scan.nextInt();
+                    switch (i) {
+                        case 1:
+                            System.out.println(checkBalance(cashCard));
+                            break;
+                        case 2:
+                            System.out.println("Введите сумму, на которую хотите пополнить баланс");
+                            int putMoney = scan.nextInt();
+                            System.out.println("Успешно выпонено. Ваш баланс: " + putMoney(cashCard, putMoney));
+                            break;
+                        case 3:
+                            System.out.println("Введите сумму, которую хотите снять");
+                            int takeMoney = scan.nextInt();
+                            try {System.out.println("Успешно выпонено. Ваш баланс: " + takeMoney(cashCard, takeMoney));
+
+                            } catch (NotEnoughMoneyException e) {
+
+                                System.out.println(e.getMessage());
+                                throw e;
+                            }
+                            break;
+                    }
+
+                }
+
+            }
+
+        }
 
 
     }
-
-    /*@Override
-    public boolean equals(Object o) {
-        if (o == null || o.getClass() != this.getClass())
-            return false;
-        if (o == this)
-            return true;
-        CashCard1 that = (CashCard1) o;
-        return this.lastName.equals(that.lastName) && this.pinCode == that.pinCode;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = 17;
-        int prime = 31;
-
-        result = result * prime + lastName.hashCode();
-        result = result * prime + pinCode;
-
-        return result;
-    }*/
-
-
 }
+

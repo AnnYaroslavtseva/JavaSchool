@@ -1,6 +1,6 @@
 public interface Terminal {
-    int checkBalance(Object card);
-    void putMoney(CacheCard card,int sum);
-    void takeMoney(CacheCard card, int sum) throws NotEnoughMoneyException;
+    int checkBalance(CashCard card);
+    int putMoney(CashCard card,int sum);
+    int takeMoney(CashCard card, int sum) throws NotEnoughMoneyException;
 
 }
