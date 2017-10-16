@@ -11,8 +11,6 @@ import static java.lang.ClassLoader.getSystemClassLoader;
 public class CahedCalc implements InvocationHandler {
     Object target;
     private Object ob;
-    // Class classes[] = {ICalc.class};
-    //private CreateCalc createCalc;
 
     public CahedCalc(Object target) {
         this.target = target;
@@ -20,12 +18,7 @@ public class CahedCalc implements InvocationHandler {
 
 
 
-   /* public static <T> T cache(Object target) { //Создаем сласслоадер
-        return (T) Proxy.newProxyInstance(getSystemClassLoader(),
-                target.getClass().getInterfaces(),
-                new CahedCalc(target)
-        );
-    } */
+
 
 
 
