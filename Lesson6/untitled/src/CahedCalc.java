@@ -16,12 +16,6 @@ public class CahedCalc implements InvocationHandler {
         this.target = target;
     }
 
-
-
-
-
-
-
     private static void writeFile(Object[] mArgs, Double res) throws IOException {
         StringBuilder args = new StringBuilder();
         String result = String.valueOf((Double) res);

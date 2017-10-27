@@ -3,16 +3,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Cache {
-  // CacheType cacheType();
-   String fileNamePrefix() default "";
-  // boolean zip();
-   Class[] identifyBy() default {};
+    String fileNamePrefix() default "";
 
-
-
-
+    Class[] identityBy() default {};
 }
