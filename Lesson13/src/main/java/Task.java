@@ -26,6 +26,8 @@ public class Task<T> {
             }
 
             result = (T) "Method get is work";
-            return result;}
+
+
+                 return result;}
       }
 }
